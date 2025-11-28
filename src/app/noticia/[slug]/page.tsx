@@ -3,12 +3,13 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 
 type Props = {
-    params: { slug: string };
+    params: Promise<{ slug: string }>; // <--- CAMBIO IMPORTANTE: Es una promesa
 };
 
 // 1. GENERACIÓN DE SEO AUTOMÁTICO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const article = getArticleBySlug(params.slug);
+    const { slug } = await params; // <--- Esperamos a que se resuelvan los params
+    const article = getArticleBySlug(slug);
 
     if (!article) return { title: 'Noticia no encontrada' };
 
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title: article.title,
             description: article.description,
-            images: [article.image], // Imagen que se verá al compartir en redes
+            images: [article.image],
             type: 'article',
             publishedTime: article.date,
             authors: ['Redacción Noticias MX'],
@@ -27,8 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // 2. RENDERIZADO DE LA NOTICIA
-export default function ArticlePage({ params }: Props) {
-    const article = getArticleBySlug(params.slug);
+export default async function ArticlePage({ params }: Props) {
+    const { slug } = await params; // <--- Esperamos a que se resuelvan los params
+    const article = getArticleBySlug(slug);
 
     if (!article) return notFound();
 
@@ -53,9 +55,8 @@ export default function ArticlePage({ params }: Props) {
             />
 
             <div className="prose prose-lg max-w-none text-gray-800">
-                {/* Aquí iría el contenido HTML si viniera de un CMS */}
                 <p>{article.content}</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p className="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
             </div>
         </article>
     );
