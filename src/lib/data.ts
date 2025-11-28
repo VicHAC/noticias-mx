@@ -16,7 +16,7 @@ export const articles = [
         content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia...',
         category: 'cdmx',
         date: '2023-10-25',
-        image: 'https://placehold.co/600x400?text=Metro+CDMX'
+        image: '/baguettte.jpg'
     },
     {
         id: '2',
