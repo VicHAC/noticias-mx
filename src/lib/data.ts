@@ -26,7 +26,7 @@ export const articles = [
         content: 'Nulla facilisi. Sed non risus. Suspendisse lectus tortor...',
         category: 'gastronomia',
         date: '2023-10-24',
-        image: 'https://placehold.co/600x400?text=Tacos'
+        image: '/bananacat.webp'
     },
     {
         id: '3',
