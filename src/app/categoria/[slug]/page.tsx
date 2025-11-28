@@ -10,6 +10,7 @@ type Props = {
 // 1. GENERAR METADATA (SEO)
 export async function generateMetadata({ params }: Props) {
     const { slug } = await params; // <--- Esperamos los params
+    const category = categories.find(c => c.slug === slug);
 
     return {
         title: category ? `${category.name} - Noticias MX` : 'Categoría no encontrada',
